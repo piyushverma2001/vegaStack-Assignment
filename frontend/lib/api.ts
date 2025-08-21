@@ -9,7 +9,6 @@ export const api = axios.create({
   },
 })
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('auth-storage')
@@ -30,12 +29,10 @@ api.interceptors.request.use(
   }
 )
 
-// Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Try to refresh token first
       const authData = localStorage.getItem('auth-storage')
       if (authData) {
         try {
@@ -43,14 +40,12 @@ api.interceptors.response.use(
           const refreshToken = parsed.state?.refreshToken
           
           if (refreshToken) {
-            // Attempt token refresh
             const refreshResponse = await axios.post(
               `${API_URL}/users/token/refresh/`,
               { refresh: refreshToken }
             )
             
             if (refreshResponse.data.access) {
-              // Update stored tokens
               const newAuthData = {
                 ...parsed,
                 state: {
@@ -60,7 +55,6 @@ api.interceptors.response.use(
               }
               localStorage.setItem('auth-storage', JSON.stringify(newAuthData))
               
-              // Retry original request with new token
               error.config.headers.Authorization = `Bearer ${refreshResponse.data.access}`
               return axios.request(error.config)
             }
@@ -70,7 +64,6 @@ api.interceptors.response.use(
         }
       }
       
-      // If refresh failed or no refresh token, redirect to login
       localStorage.removeItem('auth-storage')
       window.location.href = '/'
     }
@@ -78,7 +71,6 @@ api.interceptors.response.use(
   }
 )
 
-// API endpoints
 export const endpoints = {
   auth: {
     login: '/users/login/',

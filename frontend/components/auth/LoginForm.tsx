@@ -20,7 +20,6 @@ type LoginFormData = z.infer<typeof loginSchema>
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [verificationRequired, setVerificationRequired] = useState(false)
   const { login } = useAuth()
   
   const {
@@ -33,20 +32,13 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
-    setVerificationRequired(false)
     
     try {
       await login(data.email_or_username, data.password)
     } catch (error: any) {
       console.error('Login error:', error)
-      
-      if (error.response?.data?.verification_required) {
-        setVerificationRequired(true)
-        toast.error('Please verify your email address before logging in.')
-      } else {
-        const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.'
-        toast.error(errorMessage)
-      }
+      const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.'
+      toast.error(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -54,20 +46,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {verificationRequired && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-yellow-600" />
-            <div>
-              <p className="text-yellow-800 text-sm font-medium">Email verification required</p>
-              <p className="text-yellow-700 text-sm">Please check your email and verify your account before logging in.</p>
-              <Link href="/verify-email" className="text-yellow-600 hover:text-yellow-500 text-sm underline">
-                Need to verify your email?
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       <div>
         <label htmlFor="email_or_username" className="block text-sm font-medium text-gray-700 mb-1">
@@ -125,12 +104,7 @@ export function LoginForm() {
         >
           Forgot your password?
         </Link>
-        <Link
-          href="/verify-email"
-          className="text-sm text-gray-600 hover:text-gray-500 block"
-        >
-          Need to verify your email?
-        </Link>
+
       </div>
     </form>
   )

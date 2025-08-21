@@ -15,7 +15,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 })
 
-// Real-time notification subscription
 export const subscribeToNotifications = (userId: string, callback: (payload: any) => void) => {
   return supabase
     .channel('notifications')
@@ -32,7 +31,6 @@ export const subscribeToNotifications = (userId: string, callback: (payload: any
     .subscribe()
 }
 
-// Unsubscribe from notifications
 export const unsubscribeFromNotifications = (subscription: any) => {
   if (subscription) {
     supabase.removeChannel(subscription)
