@@ -11,7 +11,7 @@ services:
       python manage.py migrate
     startCommand: |
       cd backend
-      gunicorn socialconnect.wsgi:application --bind 0.0.0.0:$PORT
+      gunicorn socialconnect.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -30,11 +30,11 @@ services:
       - key: CORS_ALLOWED_ORIGINS
         value: "https://vega-stack-frontend.onrender.com"
       - key: SUPABASE_URL
-        sync: false
+        value: ""
       - key: SUPABASE_ANON_KEY
-        sync: false
+        value: ""
       - key: SUPABASE_SERVICE_ROLE_KEY
-        sync: false
+        value: ""
 
   # Next.js Frontend
   - type: web
@@ -43,7 +43,7 @@ services:
     plan: free
     buildCommand: |
       cd frontend
-      npm install
+      npm ci --only=production
       npm run build
     startCommand: |
       cd frontend
@@ -54,12 +54,13 @@ services:
       - key: NEXT_PUBLIC_API_URL
         value: https://vega-stack-backend.onrender.com
       - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
+        value: ""
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        sync: false
+        value: ""
 
 databases:
   - name: vega-stack-db
     databaseName: vega_stack
     user: vega_stack_user
     plan: free
+    ipAllowList: []
