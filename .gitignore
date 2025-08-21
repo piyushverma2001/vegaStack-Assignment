@@ -1,0 +1,15 @@
+__pycache__/
+.Python
+media/
+
+venv/
+.env
+.venv
+env/
+
+node_modules/
+.env.local
+.next/
+
+.vscode/
+build/
