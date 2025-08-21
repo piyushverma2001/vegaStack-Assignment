@@ -18,16 +18,16 @@ interface UserProfileData {
   role: string
   is_verified: boolean
   created_at: string
-  profile: {
-    bio: string
-    avatar_url: string
-    website: string
-    location: string
-    privacy: string
-    followers_count: number
-    following_count: number
-    posts_count: number
-  }
+      profile: {
+      bio: string
+      avatar_url: string
+      website: string
+      location: string
+      privacy: 'public' | 'private' | 'followers_only'
+      followers_count: number
+      following_count: number
+      posts_count: number
+    }
 }
 
 interface UserProfileProps {

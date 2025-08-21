@@ -19,10 +19,10 @@ interface User {
   role: string
   is_active: boolean
   created_at: string
-  profile?: {
-    bio: string
-    privacy: string
-  }
+      profile?: {
+      bio: string
+      privacy: 'public' | 'private' | 'followers_only'
+    }
 }
 
 export function UserManagement() {

@@ -29,7 +29,7 @@ interface FollowersListProps {
 }
 
 export function FollowersList({ userId, username, onClose }: FollowersListProps) {
-  const { user: currentUser, token } = useAuth()
+  const { user: currentUser } = useAuth()
   const router = useRouter()
   const [followers, setFollowers] = useState<Follower[]>([])
   const [isLoading, setIsLoading] = useState(true)

@@ -19,7 +19,7 @@ interface User {
     followers_count: number
     following_count: number
     posts_count: number
-    privacy: string
+    privacy: 'public' | 'private' | 'followers_only'
   }
   is_following?: boolean
 }
