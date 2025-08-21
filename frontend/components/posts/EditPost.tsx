@@ -23,7 +23,7 @@ interface EditPostProps {
     content: string
     image?: string
     image_url?: string
-    category: string
+    category: 'general' | 'announcement' | 'question'
   }
   onPostUpdated: () => void
   onCancel: () => void
