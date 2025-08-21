@@ -46,7 +46,7 @@ export function UserProfile({ userId }: UserProfileProps) {
   const [showFollowers, setShowFollowers] = useState(false)
   const [showFollowing, setShowFollowing] = useState(false)
 
-  const targetUserId = userId || currentUser?.id
+  const targetUserId = userId || currentUser?.id || ''
   const isOwnProfile = currentUser?.id === targetUserId
 
   useEffect(() => {
