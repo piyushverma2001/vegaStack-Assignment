@@ -108,7 +108,7 @@ export function Feed() {
       <div className="text-center py-12">
         <div className="text-red-600 mb-4">{error}</div>
         <button
-          onClick={fetchPosts}
+          onClick={() => fetchPosts(currentPage)}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Try Again
