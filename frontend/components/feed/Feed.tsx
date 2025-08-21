@@ -20,7 +20,7 @@ interface FeedPost {
   like_count: number
   comment_count: number
   image_url?: string
-  category: string
+  category: 'general' | 'announcement' | 'question'
   is_liked_by_user: boolean
 
 }

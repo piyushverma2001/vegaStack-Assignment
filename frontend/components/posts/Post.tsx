@@ -14,7 +14,7 @@ interface PostProps {
     content: string
     image?: string
     image_url?: string
-    category: string
+    category: 'general' | 'announcement' | 'question'
     author: {
       id: string
       username: string
