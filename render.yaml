@@ -1,5 +1,4 @@
 services:
-  # Django Backend API
   - type: web
     name: vega-stack-backend
     env: python
@@ -36,7 +35,6 @@ services:
       - key: SUPABASE_SERVICE_ROLE_KEY
         value: ""
 
-  # Next.js Frontend
   - type: web
     name: vega-stack-frontend
     env: node
